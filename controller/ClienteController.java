@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import app.loja.entity.Cliente;
@@ -36,7 +37,7 @@ public class ClienteController {
 		try {
 			Cliente cliente = this.clienteService.findById(idCliente);
 			return new ResponseEntity<>(cliente,HttpStatus.OK);
-			
+
 		} catch (Exception e) {
 			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 		}
@@ -70,6 +71,29 @@ public class ClienteController {
 		catch (Exception e){
 			return new ResponseEntity<String>("Erro: " +e, HttpStatus.BAD_REQUEST);
 		}
-		
+	}
+	@GetMapping("/findBynomeCliente")
+	public ResponseEntity<List<Cliente>> findBynomeCliente(@RequestParam String nomeCliente){
+		try {
+			return new ResponseEntity<List<Cliente>>(this.clienteService.findBynomeCliente(nomeCliente), HttpStatus.FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	@GetMapping("/findByTelefone")
+	public ResponseEntity<List<Cliente>> findByTelefone(@RequestParam String telefone){
+		try {
+			return new ResponseEntity<List<Cliente>>(this.clienteService.findByTelefone(telefone), HttpStatus.FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
+	}
+	@GetMapping("/findByMaiorIdade")
+	public ResponseEntity<List<Cliente>> findByIdadeMaior(@RequestParam long idade){
+		try {
+			return new ResponseEntity<List<Cliente>>(this.clienteService.findByIdadeMaior(idade), HttpStatus.FOUND);
+		} catch (Exception e) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 	}
 }
